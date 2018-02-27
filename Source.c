@@ -83,7 +83,7 @@ void displayMenu()
 				break;
 
 			case 'c':
-				freeStuff();
+				freeStuff(); // Function call to free dynamically allocated memory
 				return;
 
 			default:
@@ -169,7 +169,7 @@ void readOrWrite()
 			nInputFlag = 0; // Yes so stop the loop
 		}
 	}
-	accessCache(cInput, nMainMemAddr, nData);
+	accessCache(cInput, nMainMemAddr, nData); // Function call to access the cache
 }
 
 // Function to access the cache
@@ -198,7 +198,7 @@ void accessCache(char cInput, int nMainMemAddr, int nData)
 		int i = 0; // because c
 		for (i = 0; i < g_nBlockSize; i++) // Transfer the equivalent block from main memory to newly created block in cache, one word at a time
 		{
-			cache[nBlock].m_pBlock[i] = g_pMainMem[nBase + i];
+			cache[nBlock].m_pBlock[i] = g_pMainMem[nBase + i]; 
 		}
 	}
 
