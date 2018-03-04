@@ -8,6 +8,8 @@ T/R 3:30 P.M - 4:45 P.M
 Assignment #2: Cache Memory
 main.c
 
+Version 3.0
+
 The program works as expected and follows
 program specifications.  It creates a
 cache and main memory given input and
@@ -110,6 +112,10 @@ void setParamaters()
 	printf("Enter block size (words/block):  ");
 	scanf("%d", &g_nBlockSize);
 
+	// Is main memory free?
+	if (g_pMainMem != NULL)
+		freeStuff();
+
 	// Build Main memory
 	g_pMainMem = (int *)malloc(g_nMainMemSize * sizeof(int));
 
@@ -119,6 +125,10 @@ void setParamaters()
 	{
 		g_pMainMem[i] = g_nMainMemSize - i; // Because specifications said so
 	}
+
+	// Is cache free?
+	if (cache != NULL)
+		freeStuff();
 
 	// Build Cache
 	g_nNumLines = g_nCacheSize / g_nBlockSize; // Set number of lines in cache given paramaters entered
@@ -198,7 +208,7 @@ void accessCache(char cInput, int nMainMemAddr, int nData)
 		int i = 0; // because c
 		for (i = 0; i < g_nBlockSize; i++) // Transfer the equivalent block from main memory to newly created block in cache, one word at a time
 		{
-			cache[nBlock].m_pBlock[i] = g_pMainMem[nBase + i]; 
+			cache[nBlock].m_pBlock[i] = g_pMainMem[nBase + i];
 		}
 	}
 
