@@ -113,8 +113,11 @@ void setParamaters()
 	scanf("%d", &g_nBlockSize);
 
 	// Is main memory free?
-	if (g_pMainMem != NULL)
-		freeStuff();
+	if (g_pMainMem != NULL) // Is the main memory null?
+	{
+		free(g_pMainMem); // Free!!!!!!
+		g_pMainMem = NULL;
+	}
 
 	// Build Main memory
 	g_pMainMem = (int *)malloc(g_nMainMemSize * sizeof(int));
@@ -127,8 +130,20 @@ void setParamaters()
 	}
 
 	// Is cache free?
-	if (cache != NULL)
-		freeStuff();
+	if (cache != NULL) // Is the cache null?
+	{
+		int i = 0;
+		for (i = 0; i < g_nNumLines; i++) // It's not null so are all the lines in the cache null?
+		{
+			if (cache[i].m_nTag != -1) // If the tag isn't -1 it was dynamically allocated
+			{
+				free(cache[i].m_pBlock); // Free!!!!
+				cache[i].m_pBlock = NULL;
+			}
+		}
+		free(cache); // There's no more lines that were dynamically allocated, so free the cache now
+		cache = NULL;
+	}
 
 	// Build Cache
 	g_nNumLines = g_nCacheSize / g_nBlockSize; // Set number of lines in cache given paramaters entered
